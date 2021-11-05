@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,10 +16,43 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/artists', function(){
-    return 'artists';
+/**
+ * Get list of all artists
+ */
+
+/**
+ * Create a new artist
+ */
+
+
+/**
+ * Create a new artist
+ */
+
+
+// Route::resource('artists', ArtistController::class);
+
+/**
+ * Public routes
+ */
+Route::post('/register', [UserController::class, 'register']);
+Route::get('/artists', [ArtistController::class, 'index']);
+Route::get('/artists/{id}', [ArtistController::class, 'show']);
+Route::get('artists/search/{name}', [ArtistController::class, 'search']);
+
+/**
+ * Protected routes with a token
+ */
+Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::post('/artists', [ArtistController::class, 'store']);
+    Route::put('/artists/{id}', [ArtistController::class, 'update']);
+    Route::delete('/artists/{id}', [ArtistController::class, 'destroy']);
+    Route::post('/logout', [UserController::class, 'logout']);
 });
 
+/**
+ * Middleware Sanctum Authentication
+ */
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
