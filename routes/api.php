@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ArtistController;
+use App\Http\Controllers\StageController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,9 @@ Route::post('/login', [UserController::class, 'login']);
 Route::get('/artists', [ArtistController::class, 'index']);
 Route::get('/artists/{id}', [ArtistController::class, 'show']);
 Route::get('artists/search/{name}', [ArtistController::class, 'search']);
+Route::get('/stages', [StageController::class, 'index']);
+Route::get('/stages/{id}', [StageController::class, 'show']);
+
 
 /**
  * Protected routes with a token
