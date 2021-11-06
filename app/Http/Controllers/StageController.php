@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Artist;
+use App\Models\Stage;
+use Illuminate\Http\Response;
 use Illuminate\Http\Request;
+use Laravel\Sanctum\HasApiTokens;
 
-class ArtistController extends Controller
+class StageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,7 +16,7 @@ class ArtistController extends Controller
      */
     public function index()
     {
-        return Artist::all();
+        return Stage::all();
     }
 
     /**
@@ -26,12 +28,12 @@ class ArtistController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'artist_name' => 'required|max:255',
-            'artist_description' => 'required',
-            'artist_img' => 'required|max:255',
+            'stage_name' => 'required',
+            'stage_description' => 'required',
+            'stage_img' => 'required',
         ]);
 
-        return Artist::create($request->all());
+        return Stage::create($request->all());
     }
 
     /**
@@ -42,7 +44,7 @@ class ArtistController extends Controller
      */
     public function show($id)
     {
-        return Artist::find($id);
+        return Stage::find($id);
     }
 
     /**
@@ -54,9 +56,9 @@ class ArtistController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $artist = Artist::find($id);
-        $artist->update($request->all());
-        return $artist;
+        $stage = Stage::find($id);
+        $stage->update($request->all());
+        return $stage;
     }
 
     /**
@@ -67,20 +69,8 @@ class ArtistController extends Controller
      */
     public function destroy($id)
     {
-        Artist::destroy($id);
         return response([
-            'message' => "Artist number $id deleted"
+            'message' => "Stage number $id deleted"
         ], 200);
-    }
-
-    /**
-     * Search for a name of artist
-     *
-     * @param  int  $name
-     * @return \Illuminate\Http\Response
-     */
-    public function search($name)
-    {
-        return Artist::where('artist_name', 'like', '%' . $name . '%')->get();
     }
 }
