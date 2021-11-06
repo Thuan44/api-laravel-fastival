@@ -38,9 +38,11 @@ use Illuminate\Support\Facades\Route;
  */
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
+// Artists
 Route::get('/artists', [ArtistController::class, 'index']);
 Route::get('/artists/{id}', [ArtistController::class, 'show']);
 Route::get('artists/search/{name}', [ArtistController::class, 'search']);
+// Stages
 Route::get('/stages', [StageController::class, 'index']);
 Route::get('/stages/{id}', [StageController::class, 'show']);
 
@@ -50,9 +52,14 @@ Route::get('/stages/{id}', [StageController::class, 'show']);
  */
 Route::group(['middleware' => ['auth:sanctum']], function(){
     Route::post('/logout', [UserController::class, 'logout']);
+    // Artists
     Route::post('/artists', [ArtistController::class, 'store']);
     Route::put('/artists/{id}', [ArtistController::class, 'update']);
     Route::delete('/artists/{id}', [ArtistController::class, 'destroy']);
+    // Stages
+    Route::post('/stages', [StageController::class, 'store']);
+    Route::put('/stages/{id}', [StageController::class, 'update']);
+    Route::delete('/stages/{id}', [StageController::class, 'destroy']);
 });
 
 /**

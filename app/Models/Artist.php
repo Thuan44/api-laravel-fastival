@@ -17,7 +17,7 @@ class Artist extends Model
         'artist_name',
         'artist_description',
         'artist_img',
-        'artis_concert_date',
+        'artist_concert_date',
         'artist_concert_time',
         'stage_id',
     ];
