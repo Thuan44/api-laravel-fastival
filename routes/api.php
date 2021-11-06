@@ -36,6 +36,7 @@ use Illuminate\Support\Facades\Route;
  * Public routes
  */
 Route::post('/register', [UserController::class, 'register']);
+Route::post('/login', [UserController::class, 'login']);
 Route::get('/artists', [ArtistController::class, 'index']);
 Route::get('/artists/{id}', [ArtistController::class, 'show']);
 Route::get('artists/search/{name}', [ArtistController::class, 'search']);
@@ -44,10 +45,10 @@ Route::get('artists/search/{name}', [ArtistController::class, 'search']);
  * Protected routes with a token
  */
 Route::group(['middleware' => ['auth:sanctum']], function(){
+    Route::post('/logout', [UserController::class, 'logout']);
     Route::post('/artists', [ArtistController::class, 'store']);
     Route::put('/artists/{id}', [ArtistController::class, 'update']);
     Route::delete('/artists/{id}', [ArtistController::class, 'destroy']);
-    Route::post('/logout', [UserController::class, 'logout']);
 });
 
 /**

@@ -32,6 +32,33 @@ class UserController extends Controller
         return response($response, 201); // Success and creation of a resource
     }
 
+    public function login(Request $request)
+    {
+        $fields = $request->validate([
+            'user_email' => 'required|string', // Unique to the users table and the user_email column
+            'user_password' => 'required|string'
+        ]);
+        
+        // Check the email
+        $user = User::where('user_email', $fields['user_email'])->first();
+
+        // Check password
+        if(!$user || !Hash::check($fields['user_password'], $user->user_password)){
+            return response([
+                'message' => 'Bad credentials'
+            ], 401); // Unauthorized
+        }
+
+        $token = $user->createToken('appToken')->plainTextToken; // 'appToken' is the key
+        
+        $response = [
+            'user' => $user,
+            'token' => $token
+        ];
+
+        return response($response, 201); // Success and creation of a resource
+    }
+
     public function logout(Request $request){
         $request->user()->tokens()->delete(); // Destroy all tokens
 
