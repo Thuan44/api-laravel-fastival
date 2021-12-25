@@ -31,6 +31,7 @@ class ArtistController extends Controller
             'artist_img' => 'required|max:255',
         ]);
 
+
         return Artist::create($request->all());
     }
 
